@@ -1,0 +1,347 @@
+# ============================================================ #
+# Projeto CARTIO                                               #
+# Autoria: Wagner Calazans                                     #
+# Ano de criação: 2025                                         #
+# Versao: 1.2 (The Multilingual Tactical Release)              #
+# IME - Instituto Militar de Engenharia                        #
+#                                                              #
+# Sigla: Common Authorized Resilient Tactical Identity         #
+#        Operations                                            #
+# PT: Coleção Autenticada de Registros Táticos de Identidade   #
+#     em Operações                                             #
+#                                                              #
+# Arquivo: schema.ldif                                         #
+# Descrição: Arquivo principal de idenficação                  #
+# ============================================================ #
+
+# --- Atributos de cartioPerson (Universais) ---
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.1
+    NAME 'cartioPersonStatus'
+    DESC 'EN: Status of the person (e.g., Military, Civilian, NGO, Volunteer)'
+    DESC 'PT: Status da pessoa (ex: Militar, Civil, ONG, Voluntário)'
+    DESC 'FR: Statut de la personne (ex: Militaire, Civil, ONG, Volontaire)'
+    DESC 'ES: Estado de la persona (ej: Militar, Civil, ONG, Voluntário)'
+    DESC 'DE: Status der Person (z.B. Militär, Zivil, NGO, Freiwilliger)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.2
+    NAME 'cartioNationality'
+    DESC 'EN: Nationality of the person (ISO 3166-1 alpha-2 code)'
+    DESC 'PT: Nacionalidade da pessoa (código ISO 3166-1 alfa-2)'
+    DESC 'FR: Nationalité de la personne (code ISO 3166-1 alpha-2)'
+    DESC 'ES: Nacionalidad de la persona (código ISO 3166-1 alfa-2)'
+    DESC 'DE: Staatsangehörigkeit der Person (ISO 3166-1 Alpha-2-Code)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.11{2}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.3
+    NAME 'cartioPrimaryAffiliation'
+    DESC 'EN: Primary organizational affiliation (e.g., Army, Red Cross, FEMA)'
+    DESC 'PT: Afiliação organizacional primária (ex: Exército, Cruz Vermelha, FEMA)'
+    DESC 'FR: Affiliation organisationnelle principale (ex: Armée, Croix-Rouge, FEMA)'
+    DESC 'ES: Afiliación organizativa principal (ej: Ejército, Cruz Roja, FEMA)'
+    DESC 'DE: Primäre organisatorische Zugehörigkeit (z.B. Heer, Rotes Kreuz, FEMA)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.4
+    NAME 'cartioSecurityClearance'
+    DESC 'EN: Security clearance level (inspired by X.841/ACP 133)'
+    DESC 'PT: Nível de habilitação de segurança (inspirado em X.841/ACP 133)'
+    DESC 'FR: Niveau d'habilitation de sécurité (inspiré de X.841/ACP 133)'
+    DESC 'ES: Nivel de habilitación de seguridad (inspirado en X.841/ACP 133)'
+    DESC 'DE: Sicherheitsfreigabestufe (inspiriert von X.841/ACP 133)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.5
+    NAME 'cartioFathersName'
+    DESC 'EN: Father\'s full name'
+    DESC 'PT: Nome completo do pai'
+    DESC 'FR: Nom complet du père'
+    DESC 'ES: Nombre completo del padre'
+    DESC 'DE: Vollständiger Name des Vaters'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.6
+    NAME 'cartioMothersName'
+    DESC 'EN: Mother\'s full name'
+    DESC 'PT: Nome completo da mãe'
+    DESC 'FR: Nom complet de la mère'
+    DESC 'ES: Nombre completo de la madre'
+    DESC 'DE: Vollständiger Name der Mutter'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.7
+    NAME 'cartioPersonalEmail'
+    DESC 'EN: Personal email for emergency contact or password reset'
+    DESC 'PT: Email pessoal para contato de emergência ou redefinição de senha'
+    DESC 'FR: Email personnel pour contact d\'urgence ou réinitialisation de mot de passe'
+    DESC 'ES: Correo electrónico personal para contacto de emergencia o reconfiguración de contraseña'
+    DESC 'DE: Persönliche E-Mail für Notfallkontakt oder Passwort-Reset'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.26{256}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.8
+    NAME 'cartioEmergencyContactDN'
+    DESC 'EN: DN of an emergency contact (can be internal or external entry)'
+    DESC 'PT: DN de um contato de emergência (pode ser entrada interna ou externa)'
+    DESC 'FR: DN d\'un contact d\'urgence (peut être une entrée interne ou externe)'
+    DESC 'ES: DN de un contacto de emergencia (puede ser entrada interna ou externa)'
+    DESC 'DE: DN eines Notfallkontakts (kann ein interner oder externer Eintrag sein)'
+    EQUALITY distinguishedNameMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+    SINGLE-VALUE )
+
+# --- Atributos de cartioFieldProfessional (Profissionais de Campo/ONG) ---
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.10
+    NAME 'cartioFieldExpertise'
+    DESC 'EN: Field expertise (e.g., Medic, Logistics, Engineer, SAR)'
+    DESC 'PT: Especialidade de campo (ex: Médico, Logística, Engenheiro, SAR)'
+    DESC 'FR: Expertise de terrain (ex: Médecin, Logistique, Ingénieur, SAR)'
+    DESC 'ES: Experiencia en el campo (ej: Médico, Logística, Ingeniero, SAR)'
+    DESC 'DE: Fachexpertise (z.B. Mediziner, Logistik, Ingenieur, SAR)'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.11
+    NAME 'cartioQualification'
+    DESC 'EN: Formal qualification or certification (e.g., PMP, EMT-P, CDL)'
+    DESC 'PT: Qualificação ou certificação formal (ex: PMP, EMT-P, CDL)'
+    DESC 'FR: Qualification ou certification formelle (ex: PMP, EMT-P, CDL)'
+    DESC 'ES: Cualificación o certificación formal (ej: PMP, EMT-P, CDL)'
+    DESC 'DE: Formale Qualifikation oder Zertifizierung (z.B. PMP, EMT-P, CDL)'
+    EQUALITY caseIgnoreMatch
+    SUBSTR caseIgnoreSubstringsMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.12
+    NAME 'cartioDeploymentStatus'
+    DESC 'EN: Current deployment status (e.g., Deployed, Standby, Off-Duty)'
+    DESC 'PT: Status atual de desdobramento (ex: Desdobrado, Em Espera, Fora de Serviço)'
+    DESC 'FR: Statut de déploiement actuel (ex: Déployé, En attente, Hors service)'
+    DESC 'ES: Estado de despliegue actual (ej: Desplegado, En espera, Fuera de servicio)'
+    DESC 'DE: Aktueller Einsatzstatus (z.B. Im Einsatz, Bereitschaft, Außer Dienst)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.13
+    NAME 'cartioDeploymentAuthorization'
+    DESC 'EN: Deployment Authorization credential (NISTIR 7601 DA concept)'
+    DESC 'PT: Credencial de Autorização de Desdobramento (conceito DA do NISTIR 7601)'
+    DESC 'FR: Autorisation de déploiement (concept DA du NISTIR 7601)'
+    DESC 'ES: Autorización de despliegue (concepto DA de NISTIR 7601)'
+    DESC 'DE: Einsatzerlaubnis (NISTIR 7601 DA-Konzept)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.14
+    NAME 'cartioAffiliatedNGO'
+    DESC 'EN: Affiliated NGO or Volunteer Organization'
+    DESC 'PT: ONG ou Organização Voluntária afiliada'
+    DESC 'FR: ONG ou Organisation de bénévoles affiliée'
+    DESC 'ES: ONG u Organización de Voluntarios afiliada'
+    DESC 'DE: Angeschlossene NGO oder Freiwilligenorganisation'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.15
+    NAME 'cartioHomeAgencyDN'
+    DESC 'EN: DN of the person\'s home agency or organization'
+    DESC 'PT: DN da agência ou organização de origem da pessoa'
+    DESC 'FR: DN de l\'agence ou de l\'organisation d\'origine de la personne'
+    DESC 'ES: DN de la agencia u organización de origen de la persona'
+    DESC 'DE: DN der Heimatbehörde oder Organisation der Person'
+    EQUALITY distinguishedNameMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+    SINGLE-VALUE )
+
+# --- Atributos de cartioMilitaryPerson (Militares) ---
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.20
+    NAME 'cartioMilitaryRank'
+    DESC 'EN: Military Rank (e.g., Captain, Sergeant)'
+    DESC 'PT: Posto Militar (ex: Capitão, Sargento)'
+    DESC 'FR: Grade militaire (ex: Capitaine, Sergent)'
+    DESC 'ES: Rango militar (ej: Capitán, Sargento)'
+    DESC 'DE: Militärischer Rang (z.B. Hauptmann, Feldwebel)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.21
+    NAME 'cartioBranchOfService'
+    DESC 'EN: Branch of Service (e.g., Army, Navy, Air Force)'
+    DESC 'PT: Ramo do Serviço (ex: Exército, Marinha, Aeronáutica)'
+    DESC 'FR: Branche de service (ex: Armée de terre, Marine, Armée de l\'air)'
+    DESC 'ES: Rama del Servicio (ej: Ejército, Marina, Fuerza Aérea)'
+    DESC 'DE: Teilstreitkraft (z.B. Heer, Marine, Luftwaffe)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.22
+    NAME 'cartioServiceNumber'
+    DESC 'EN: Military Service Number or Identifier'
+    DESC 'PT: Número ou Identificador de Serviço Militar'
+    DESC 'FR: Numéro ou identifiant de service militaire'
+    DESC 'ES: Número o identificador de servicio militar'
+    DESC 'DE: Militärische Dienstnummer oder Kennung'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.23
+    NAME 'cartioMilitaryUnitDN'
+    DESC 'EN: DN of the military unit or command'
+    DESC 'PT: DN da unidade ou comando militar'
+    DESC 'FR: DN de l\'unité ou du commandement militaire'
+    DESC 'ES: DN de la unidad o comando militar'
+    DESC 'DE: DN der militärischen Einheit oder des Kommandos'
+    EQUALITY distinguishedNameMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.24
+    NAME 'cartioMilitarySpecialty'
+    DESC 'EN: Military Occupational Specialty (e.g., MOS, AFSC)'
+    DESC 'PT: Especialidade Ocupacional Militar (ex: MOS, AFSC)'
+    DESC 'FR: Spécialité militaire (ex: MOS, AFSC)'
+    DESC 'ES: Especialidad ocupacional militar (ej: MOS, AFSC)'
+    DESC 'DE: Militärische Fachverwendung (z.B. MOS, AFSC)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    MULTI-VALUE )
+
+# --- Atributos de cartioOrganization (Interoperabilidade Institucional) ---
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.30
+    NAME 'cartioOrganizationType'
+    DESC 'EN: Organization Type (e.g., Military, NGO, Government, Volunteer)'
+    DESC 'PT: Tipo de Organização (ex: Militar, ONG, Governo, Voluntário)'
+    DESC 'FR: Type d\'organisation (ex: Militaire, ONG, Gouvernement, Volontaire)'
+    DESC 'ES: Tipo de organización (ej: Militar, ONG, Gobierno, Voluntario)'
+    DESC 'DE: Organisationstyp (z.B. Militär, NGO, Regierung, Freiwillige)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64}
+    SINGLE-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.31
+    NAME 'cartioPocTechnical'
+    DESC 'EN: Technical Point of Contact (DN of a person)'
+    DESC 'PT: Ponto de Contato Técnico (DN de uma pessoa)'
+    DESC 'FR: Point de contact technique (DN d\'une personne)'
+    DESC 'ES: Punto de contacto técnico (DN de una persona)'
+    DESC 'DE: Technischer Ansprechpartner (DN einer Person)'
+    EQUALITY distinguishedNameMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.32
+    NAME 'cartioPocAdministrative'
+    DESC 'EN: Administrative Point of Contact (DN of a person)'
+    DESC 'PT: Ponto de Contato Administrativo (DN de uma pessoa)'
+    DESC 'FR: Point de contact administratif (DN d\'une personne)'
+    DESC 'ES: Punto de contacto administrativo (DN de una persona)'
+    DESC 'DE: Administrativer Ansprechpartner (DN einer Person)'
+    EQUALITY distinguishedNameMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.12
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.33
+    NAME 'cartioInteroperabilityServiceEndpoint'
+    DESC 'EN: URI for a service endpoint (e.g., API, SAML IdP)'
+    DESC 'PT: URI de um endpoint de serviço (ex: API, IdP SAML)'
+    DESC 'FR: URI d\'un point de terminaison de service (ex: API, IdP SAML)'
+    DESC 'ES: URI de un punto de conexión de servicio (ej: API, IdP SAML)'
+    DESC 'DE: URI für einen Dienstendpunkt (z.B. API, SAML IdP)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.34
+    NAME 'cartioDataProtocolSupported'
+    DESC 'EN: Data protocol supported for exchange (e.g., FHIR, SAML, ACP 142)'
+    DESC 'PT: Protocolo de dados suportado para troca (ex: FHIR, SAML, ACP 142)'
+    DESC 'FR: Protocole de données pris en charge pour l\'échange (ex: FHIR, SAML, ACP 142)'
+    DESC 'ES: Protocolo de datos admitido para intercambio (ej: FHIR, SAML, ACP 142)'
+    DESC 'DE: Unterstütztes Datenprotokoll für den Austausch (z.B. FHIR, SAML, ACP 142)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{128}
+    MULTI-VALUE )
+
+olcAttributeTypes: ( 1.3.6.1.4.1..600.2.35
+    NAME 'cartioGeographicCoverage'
+    DESC 'EN: Geographic area of operation (e.g., ISO 3166-2 code or region name)'
+    DESC 'PT: Área geográfica de operação (ex: código ISO 3166-2 ou nome da região)'
+    DESC 'FR: Zone géographique d\'opération (ex: code ISO 3166-2 ou nom de région)'
+    DESC 'ES: Área geográfica de operación (ej: código ISO 3166-2 o nombre de región)'
+    DESC 'DE: Geographisches Einsatzgebiet (z.B. ISO 3166-2 Code oder Regionsname)'
+    EQUALITY caseIgnoreMatch
+    SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{256}
+    MULTI-VALUE )
+
+#================================================================
+# Definições de Classe de Objeto (Object Classes)
+# Ramo: 1.3.6.1.4.1..600.1
+#================================================================
+
+olcObjectClasses: ( 1.3.6.1.4.1..600.1.1
+    NAME 'cartioPerson'
+    DESC 'Joint Operations Person auxiliary class'
+    SUP top
+    AUXILIARY
+    MAY ( cartioPersonStatus $ cartioNationality $ cartioPrimaryAffiliation $ 
+          cartioSecurityClearance $ cartioFathersName $ cartioMothersName $ 
+          cartioPersonalEmail $ cartioEmergencyContactDN )
+    )
+
+olcObjectClasses: ( 1.3.6.1.4.1..600.1.2
+    NAME 'cartioMilitaryPerson'
+    DESC 'Joint Operations Military Person auxiliary class'
+    SUP top
+    AUXILIARY
+    MAY ( cartioMilitaryRank $ cartioBranchOfService $ cartioServiceNumber $ 
+          cartioMilitaryUnitDN $ cartioMilitarySpecialty )
+    )
+
+olcObjectClasses: ( 1.3.6.1.4.1..600.1.3
+    NAME 'cartioFieldProfessional'
+    DESC 'Joint Operations Field Professional auxiliary class'
+    SUP top
+    AUXILIARY
+    MAY ( cartioFieldExpertise $ cartioQualification $ cartioDeploymentStatus $ 
+          cartioDeploymentAuthorization $ cartioAffiliatedNGO $ cartioHomeAgencyDN )
+    )
+
+olcObjectClasses: ( 1.3.6.1.4.1..600.1.4
+    NAME 'cartioOrganization'
+    DESC 'Joint Operations participating organization'
+    SUP organization
+    STRUCTURAL
+    MUST ( organizationName )
+    MAY ( cartioOrganizationType $ cartioPocTechnical $ cartioPocAdministrative $ 
+          cartioInteroperabilityServiceEndpoint $ cartioDataProtocolSupported $ 
+          cartioGeographicCoverage )
+    )
