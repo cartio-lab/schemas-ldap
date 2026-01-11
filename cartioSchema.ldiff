@@ -13,7 +13,7 @@
 # Arquivo: schema.ldif                                         #
 # Descrição: Arquivo principal de idenficação                  #
 # ============================================================ #
-
+#
 # --- Atributos de cartioPerson (Universais) ---
 
 olcAttributeTypes: ( 1.3.6.1.4.1..600.2.1
