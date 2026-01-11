@@ -1,15 +1,3 @@
-# ============================================================ #
-# Projeto CARTO
-# Autoria: Wagner Calazans
-# Ano de criação: 2025
-# Versao: 1.1
-# IME - Instituto Militar de Engenharia
-#
-# Arquivo: README.md
-# Descrição: Core documentation for LDAP schemas in identity 
-#            management for Joint Operations and Disaster Response.
-# ============================================================ #
-
 # LDAP Schemas for Project CARTO
 
 This repository contains the **core (heart)** of the identity management system for Project CARTO. It defines the LDAP schema extensions necessary to achieve interoperability between diverse agencies during Joint Operations and Disaster Response (JODR).
