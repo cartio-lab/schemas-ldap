@@ -1,6 +1,6 @@
-# LDAP Schemas for Project CARTO
+# LDAP Schemas for Project CARTIO
 
-This repository contains the **core (heart)** of the identity management system for Project CARTO. It defines the LDAP schema extensions necessary to achieve interoperability between diverse agencies during Joint Operations and Disaster Response (JODR).
+This repository contains the **core (heart)** of the identity management system for Project CARTIO. It defines the LDAP schema extensions necessary to achieve interoperability between diverse agencies during Joint Operations and Disaster Response (JODR).
 
 The primary goal is to provide a standardized directory structure that allows Military, Civil Defense, and NGOs to share identity data and access controls seamlessly.
 
@@ -17,19 +17,19 @@ The schemas extend standard object classes to include operational metadata requi
 ### 2.1 Custom Attributes
 The following attributes have been defined to support specialized mission data:
 
-* **`cartoMissionID`**: Unique identifier for the specific operation or theater of activities.
-* **`cartoRank`**: Hierarchical position within the specific institution.
-* **`cartoOrganizationID`**: Identifier for the agency or branch of origin (e.g., Army, Navy, UN, Red Cross).
-* **`cartoClearanceLevel`**: Security level defining access to sensitive operational resources.
+* **`cartioMissionID`**: Unique identifier for the specific operation or theater of activities.
+* **`cartioRank`**: Hierarchical position within the specific institution.
+* **`cartioOrganizationID`**: Identifier for the agency or branch of origin (e.g., Army, Navy, UN, Red Cross).
+* **`cartioClearanceLevel`**: Security level defining access to sensitive operational resources.
 
 ### 2.2 Custom ObjectClasses
 These classes organize the attributes into logical entities:
 
 | ObjectClass | Superior | Type | Description |
 | :--- | :--- | :--- | :--- |
-| `cartoPerson` | `inetOrgPerson` | Structural | Main entity for personnel in the field. |
-| `cartoResource` | `top` | Structural | Used for technical assets and mobile units. |
-| `cartoJointGroup` | `groupOfNames` | Structural | Cross-agency groups for resource sharing. |
+| `cartioPerson` | `inetOrgPerson` | Structural | Main entity for personnel in the field. |
+| `cartioResource` | `top` | Structural | Used for technical assets and mobile units. |
+| `cartioJointGroup` | `groupOfNames` | Structural | Cross-agency groups for resource sharing. |
 
 ---
 
@@ -39,16 +39,16 @@ Below is the conceptual structure used in the `.schema` files located in this re
 
 ```text
 attributetype ( 1.3.6.1.4.1.99999.1.1 
-    NAME 'cartoMissionID' 
+    NAME 'cartioMissionID' 
     DESC 'Identifier for the Joint Operation' 
     EQUALITY caseIgnoreMatch 
     SYNTAX 1.3.6.1.4.1.1466.115.121.1.15{64} )
 
 objectclass ( 1.3.6.1.4.1.99999.2.1 
-    NAME 'cartoPerson' 
-    DESC 'CARTO Project Identity' 
+    NAME 'cartioPerson' 
+    DESC 'CARTIO Project Identity' 
     SUP inetOrgPerson STRUCTURAL 
-    MAY ( cartoMissionID $ cartoRank $ cartoOrganizationID ) )
+    MAY ( cartioMissionID $ cartioRank $ cartioOrganizationID ) )
 ```
 
 ---
@@ -63,7 +63,7 @@ objectclass ( 1.3.6.1.4.1.99999.2.1
 1.  Copy the schema files to your LDAP configuration directory.
 2.  Include the schema in your `slapd.conf`:
     ```bash
-    include /etc/ldap/schema/carto.schema
+    include /etc/ldap/schema/cartio.schema
     ```
 3.  Restart the LDAP service to commit changes.
 
